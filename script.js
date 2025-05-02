@@ -136,69 +136,50 @@ function initModeloPage() {
 // Functions for configurar-numero.html
 // -----------------------------------
 
-function adicionarCampoResposta(valor = '') {
-    const container = document.getElementById('respostas-container');
-    if (!container) return;
-
-    // Calcular o número da nova resposta
-    const numeroResposta = container.children.length + 1;
-
-    const novoItem = document.createElement('div');
-    novoItem.className = 'resposta-item';
-    novoItem.style.display = 'flex';
-    novoItem.style.marginBottom = '10px';
-    novoItem.style.alignItems = 'center'; // Alinhar itens verticalmente
-
-    // Adicionar o número da resposta
-    const numeroSpan = document.createElement('span');
-    numeroSpan.textContent = `${numeroResposta}.`;
-    numeroSpan.style.marginRight = '10px';
-    numeroSpan.style.minWidth = '25px';
-
-    novoItem.appendChild(numeroSpan);
-
-    // Criar o resto do conteúdo
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'resposta-link';
-    input.placeholder = 'Insira o Link';
-    input.value = valor;
-    input.style.flex = '1';
-    input.style.marginRight = '10px';
-
-    const botaoRemover = document.createElement('button');
-    botaoRemover.type = 'button';
-    botaoRemover.className = 'remover-resposta';
-    botaoRemover.textContent = 'X';
-    botaoRemover.style.backgroundColor = '#f44336';
-    botaoRemover.style.width = 'auto';
-    botaoRemover.style.padding = '10px';
-
-    novoItem.appendChild(input);
-    novoItem.appendChild(botaoRemover);
-    container.appendChild(novoItem);
-
-    // Adicionar evento para atualizar os números quando uma resposta for removida
-    botaoRemover.addEventListener('click', () => {
-        novoItem.remove();
-        atualizarNumerosRespostas();
-    });
-}
-
-// Nova função para atualizar os números das respostas
-function atualizarNumerosRespostas() {
-    const container = document.getElementById('respostas-container');
-    if (!container) return;
-
-    // Atualizar números de todas as respostas
-    const respostas = container.querySelectorAll('.resposta-item');
-    respostas.forEach((resposta, index) => {
-        const numeroSpan = resposta.querySelector('span');
-        if (numeroSpan) {
-            numeroSpan.textContent = `${index + 1}.`;
+// Função para atualizar a numeração dos links
+function atualizarNumeracao() {
+    const respostas = document.querySelectorAll('.resposta-item');
+    respostas.forEach((item, index) => {
+        const label = item.querySelector('label');
+        if (label) {
+            label.textContent = `${index + 1}:`;
         }
     });
 }
+
+// Função para adicionar novo campo de resposta
+function adicionarCampoResposta() {
+    const container = document.getElementById('respostas-container');
+    const novaResposta = document.createElement('div');
+    novaResposta.className = 'resposta-item';
+    
+    const numeroResposta = container.children.length + 1;
+    
+    novaResposta.innerHTML = `
+        <div class="resposta-wrapper">
+            <label for="resposta${numeroResposta}">${numeroResposta}:</label>
+            <input type="text" id="resposta${numeroResposta}" class="resposta-input" placeholder="Cole o link aqui">
+            <button type="button" class="remover-resposta">Remover</button>
+        </div>
+    `;
+
+    container.appendChild(novaResposta);
+
+    // Adicionar evento de remoção ao novo botão
+    const botaoRemover = novaResposta.querySelector('.remover-resposta');
+    botaoRemover.addEventListener('click', function() {
+        novaResposta.remove();
+        atualizarNumeracao(); // Atualiza a numeração após remover
+    });
+}
+
+// Adicionar evento ao botão de adicionar resposta
+document.addEventListener('DOMContentLoaded', function() {
+    const botaoAdicionar = document.getElementById('adicionar-resposta');
+    if (botaoAdicionar) {
+        botaoAdicionar.addEventListener('click', adicionarCampoResposta);
+    }
+});
 
 // Function to load response links from localStorage
 function carregarLinksRespostas() {
@@ -232,7 +213,7 @@ function carregarLinksRespostas() {
 
 // Function to save response links to localStorage
 function salvarLinksRespostas() {
-    const inputs = document.querySelectorAll('.resposta-link');
+    const inputs = document.querySelectorAll('.resposta-input');
     const links = [];
 
     inputs.forEach(input => {

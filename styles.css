@@ -543,7 +543,7 @@ h1.document-link {
         margin: 0;
         padding: 15mm;
     }
-    
+
     /* Garantir que as imagens não ultrapassem a largura da página */
     img {
         max-width: 100% !important;
@@ -572,13 +572,13 @@ h1.document-link {
     .botao-imprimir {
         display: none !important;
     }
-    
+
     /* Ajustes gerais para impressão */
     body {
         margin: 0;
         padding: 15mm;
     }
-    
+
     img {
         max-width: 100% !important;
         height: auto !important;

@@ -2,6 +2,24 @@
 // script.js - JavaScript functions for the InfNet document generator
 // Developed by Luis Castelo Cidrao Neto
 
+// Teste para ver se o script está carregando
+console.log("Script carregado!");
+
+// Função de imprimir
+function imprimirPDF() {
+    alert("ATENÇÃO! Ao salvar o arquivo PDF, renomeie usando o padrão:\nnome_sobrenome_DR1_TP1.PDF");
+    window.print();
+}
+
+// Teste alternativo com evento de clique
+document.addEventListener('DOMContentLoaded', function() {
+    const botao = document.querySelector('.botao-imprimir');
+    if (botao) {
+        botao.addEventListener('click', function() {
+            imprimirPDF();
+        });
+    }
+});
 // Functions for modelo.html
 // -------------------------
 
@@ -152,9 +170,9 @@ function adicionarCampoResposta() {
     const container = document.getElementById('respostas-container');
     const novaResposta = document.createElement('div');
     novaResposta.className = 'resposta-item';
-    
+
     const numeroResposta = container.children.length + 1;
-    
+
     novaResposta.innerHTML = `
         <div class="resposta-wrapper">
             <label for="resposta${numeroResposta}">${numeroResposta}:</label>
@@ -328,23 +346,14 @@ function initConfigurarPage() {
     });
 }
 
-// Função para imprimir
 function imprimirPDF() {
-    // Oculta o botão antes de imprimir
-    const botaoImprimir = document.querySelector('.botao-imprimir');
-    if (botaoImprimir) {
-        botaoImprimir.style.display = 'none';
-    }
+    alert(`ATENÇÃO!
+Ao salvar o arquivo PDF, renomeie usando o padrão:
+nome_sobrenome_DR1_TP1.PDF
 
-    // Chama a função de impressão
+Exemplo: joao_silva_DR1_TP1.PDF`);
+
     window.print();
-
-    // Restaura o botão depois de imprimir
-    setTimeout(() => {
-        if (botaoImprimir) {
-            botaoImprimir.style.display = 'block';
-        }
-    }, 1000);
 }
 
 // Adicione um evento de clique ao botão (método alternativo)
@@ -359,4 +368,205 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     initModeloPage();
     initConfigurarPage();
+});
+// ========================================
+// Configurações e Inicialização
+// ========================================
+
+/**
+ * Inicializa a página do modelo
+ * Configura eventos e carrega dados salvos
+ */
+function initModeloPage() {
+    if (document.getElementById('numeroTeste1') || document.getElementById('numeroTeste2')) {
+        function atualizarTodoConteudo() {
+            atualizarNumeroTeste();
+            atualizarDataDocumento();
+            atualizarInfoCurso();
+            atualizarLinksRespostas();
+        }
+
+        // Executa quando a página carrega
+        window.addEventListener('load', atualizarTodoConteudo);
+
+        // Atualiza quando valores são alterados em outra página
+        window.addEventListener('storage', function(e) {
+            if (['numeroTeste', 'dataDocumento', 'nomeCurso', 'nomeMateria', 
+                 'nomeAluno', 'nomeProfessor', 'respostasLinks'].includes(e.key)) {
+                atualizarTodoConteudo();
+            }
+        });
+
+        // Executa imediatamente
+        atualizarTodoConteudo();
+    }
+}
+
+// ========================================
+// Funções de Atualização do Documento
+// ========================================
+
+/**
+ * Atualiza o número do teste no documento
+ */
+function atualizarNumeroTeste() {
+    const numeroTeste = localStorage.getItem('numeroTeste') || '1';
+    ['numeroTeste1', 'numeroTeste2'].forEach(id => {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.textContent = numeroTeste;
+    });
+}
+
+/**
+ * Atualiza a data no documento
+ */
+function atualizarDataDocumento() {
+    const dataAtual = new Date();
+    const dataFormatada = `${String(dataAtual.getDate()).padStart(2, '0')}/${
+        String(dataAtual.getMonth() + 1).padStart(2, '0')}/${dataAtual.getFullYear()}`;
+    
+    const dataDocumento = localStorage.getItem('dataDocumento') || dataFormatada;
+    const elemento = document.getElementById('dataDocumento');
+    if (elemento) elemento.textContent = dataDocumento;
+}
+
+/**
+ * Atualiza as informações do curso
+ */
+function atualizarInfoCurso() {
+    const campos = {
+        'nomeCurso': '{Nome do Curso}',
+        'nomeMateria': '{Nome da Materia}',
+        'nomeAluno': '{Seu Nome}',
+        'nomeProfessor': '{Nome do Professor}'
+    };
+
+    Object.entries(campos).forEach(([id, valorPadrao]) => {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.textContent = localStorage.getItem(id) || valorPadrao;
+        }
+    });
+}
+
+// ========================================
+// Gerenciamento de Respostas
+// ========================================
+
+/**
+ * Adiciona um novo campo de resposta
+ * @param {string} [linkInicial] - Link inicial opcional para o campo
+ */
+function adicionarCampoResposta(linkInicial = '') {
+    const container = document.getElementById('respostas-container');
+    if (!container) return;
+
+    const numeroResposta = container.children.length + 1;
+    const novaResposta = document.createElement('div');
+    novaResposta.className = 'resposta-item';
+    
+    novaResposta.innerHTML = `
+        <div class="resposta-wrapper">
+            <label for="resposta${numeroResposta}">${numeroResposta}:</label>
+            <input type="text" 
+                   id="resposta${numeroResposta}" 
+                   class="resposta-input" 
+                   placeholder="Cole o link aqui"
+                   value="${linkInicial}">
+            <button type="button" class="remover-resposta">Remover</button>
+        </div>
+    `;
+
+    container.appendChild(novaResposta);
+
+    // Adiciona evento de remoção
+    const botaoRemover = novaResposta.querySelector('.remover-resposta');
+    botaoRemover.addEventListener('click', function() {
+        novaResposta.remove();
+        atualizarNumeracao();
+    });
+}
+
+/**
+ * Carrega os links de respostas salvos
+ */
+function carregarLinksRespostas() {
+    const container = document.getElementById('respostas-container');
+    if (!container) return;
+
+    // Limpa o container
+    container.innerHTML = '';
+
+    // Carrega links salvos
+    const linksJSON = localStorage.getItem('respostasLinks');
+    const links = linksJSON ? JSON.parse(linksJSON) : [];
+
+    // Se não houver links salvos, adiciona um campo vazio
+    if (links.length === 0) {
+        adicionarCampoResposta();
+    } else {
+        // Adiciona um campo para cada link salvo
+        links.forEach(link => {
+            adicionarCampoResposta(link);
+        });
+    }
+}
+
+/**
+ * Salva os links das respostas no localStorage
+ */
+function salvarLinksRespostas() {
+    const inputs = document.querySelectorAll('.resposta-input');
+    const links = Array.from(inputs)
+        .map(input => input.value.trim())
+        .filter(valor => valor);
+    
+    localStorage.setItem('respostasLinks', JSON.stringify(links));
+}
+
+// ========================================
+// Funções de Impressão
+// ========================================
+
+/**
+ * Gerencia a impressão do documento
+ */
+function imprimirPDF() {
+    const botaoImprimir = document.querySelector('.botao-imprimir');
+    if (botaoImprimir) botaoImprimir.style.display = 'none';
+    
+    window.print();
+    
+    setTimeout(() => {
+        if (botaoImprimir) botaoImprimir.style.display = 'block';
+    }, 1000);
+}
+
+// ========================================
+// Inicialização
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    initModeloPage();
+    initConfigurarPage();
+    
+    // Configura botão de impressão
+    const botaoImprimir = document.querySelector('.botao-imprimir');
+    if (botaoImprimir) {
+        botaoImprimir.addEventListener('click', imprimirPDF);
+    }
+});
+
+// Inicialização dos eventos
+document.addEventListener('DOMContentLoaded', function() {
+    const botaoAdicionar = document.getElementById('adicionar-resposta');
+    if (botaoAdicionar) {
+        // Remove eventos anteriores para evitar duplicação
+        botaoAdicionar.replaceWith(botaoAdicionar.cloneNode(true));
+        
+        // Adiciona o novo evento
+        document.getElementById('adicionar-resposta').addEventListener('click', function() {
+            adicionarCampoResposta();
+        });
+    }
 });

@@ -55,7 +55,6 @@ function atualizarInfoCurso() {
     if (professorElement) professorElement.textContent = nomeProfessor;
 }
 
-// Function to update response links
 function atualizarLinksRespostas() {
     const container = document.getElementById('respostas-links-container');
     if (!container) return;
@@ -77,12 +76,12 @@ function atualizarLinksRespostas() {
             links.forEach(link => {
                 const item = document.createElement('li');
                 const linkElement = document.createElement('a');
-                linkElement.href =link;
+                linkElement.href = link;
                 linkElement.textContent = link;
                 linkElement.target = '_blank'; // Open in new tab
                 linkElement.style.color = '#0066cc';
                 linkElement.style.textDecoration = 'underline';
-x
+
                 item.appendChild(linkElement);
                 lista.appendChild(item);
             });
@@ -94,51 +93,6 @@ x
 
 
 // Initialize modelo.html page
-<!-- Botão para baixar o PDF -->
-function downloadPDF() {
-    // Esconder o botão e o rodapé durante a geração do PDF
-    const downloadBtn = document.getElementById('download-pdf');
-    const footer = document.querySelector('.footer-credit');
-
-    downloadBtn.style.display = 'none';
-
-    // Obtendo o número do teste para nomear o arquivo PDF
-    const numeroTeste = document.getElementById('numeroTeste1').textContent;
-    const filename = `Teste_Performance_${numeroTeste}.pdf`;
-
-    // Verifica e inicializa jsPDF corretamente
-    let jsPDFLib;
-    if (window.jspdf && window.jspdf.jsPDF) {
-        jsPDFLib = window.jspdf.jsPDF;
-    } else if (window.jsPDF) {
-        jsPDFLib = window.jsPDF;
-    } else {
-        console.error("jsPDF não foi carregado. Inclua o script da biblioteca jsPDF.");
-        return;
-    }
-
-    // Criar uma instância do jsPDF com formato A4
-    const doc = new jsPDFLib({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-    });
-
-    // Converter o HTML da página inteira para PDF
-    doc.html(document.body, {
-        callback: function (doc) {
-            // Salvar o PDF com o nome configurado
-            doc.save(filename);
-
-            // Restaurar a exibição do botão e do rodapé
-            downloadBtn.style.display = originalDisplayBtn;
-            footer.style.display = originalDisplayFooter;
-        },
-        x: 10,
-        y: 10,
-        width: 190 // Ajuste para respeitar margens do A4
-    });
-}
 function initModeloPage() {
     if (document.getElementById('numeroTeste1') || document.getElementById('numeroTeste2')) {
         // Function to update all content
@@ -182,22 +136,68 @@ function initModeloPage() {
 // Functions for configurar-numero.html
 // -----------------------------------
 
-// Function to add a new response field
 function adicionarCampoResposta(valor = '') {
     const container = document.getElementById('respostas-container');
     if (!container) return;
+
+    // Calcular o número da nova resposta
+    const numeroResposta = container.children.length + 1;
 
     const novoItem = document.createElement('div');
     novoItem.className = 'resposta-item';
     novoItem.style.display = 'flex';
     novoItem.style.marginBottom = '10px';
+    novoItem.style.alignItems = 'center'; // Alinhar itens verticalmente
 
-    novoItem.innerHTML = `
-        <input type="text" class="resposta-link" placeholder="URL da resposta" style="flex: 1; margin-right: 10px;" value="${valor}">
-        <button type="button" class="remover-resposta" style="background-color: #f44336; width: auto; padding: 10px;">X</button>
-    `;
+    // Adicionar o número da resposta
+    const numeroSpan = document.createElement('span');
+    numeroSpan.textContent = `${numeroResposta}.`;
+    numeroSpan.style.marginRight = '10px';
+    numeroSpan.style.minWidth = '25px';
 
+    novoItem.appendChild(numeroSpan);
+
+    // Criar o resto do conteúdo
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'resposta-link';
+    input.placeholder = 'Insira o Link';
+    input.value = valor;
+    input.style.flex = '1';
+    input.style.marginRight = '10px';
+
+    const botaoRemover = document.createElement('button');
+    botaoRemover.type = 'button';
+    botaoRemover.className = 'remover-resposta';
+    botaoRemover.textContent = 'X';
+    botaoRemover.style.backgroundColor = '#f44336';
+    botaoRemover.style.width = 'auto';
+    botaoRemover.style.padding = '10px';
+
+    novoItem.appendChild(input);
+    novoItem.appendChild(botaoRemover);
     container.appendChild(novoItem);
+
+    // Adicionar evento para atualizar os números quando uma resposta for removida
+    botaoRemover.addEventListener('click', () => {
+        novoItem.remove();
+        atualizarNumerosRespostas();
+    });
+}
+
+// Nova função para atualizar os números das respostas
+function atualizarNumerosRespostas() {
+    const container = document.getElementById('respostas-container');
+    if (!container) return;
+
+    // Atualizar números de todas as respostas
+    const respostas = container.querySelectorAll('.resposta-item');
+    respostas.forEach((resposta, index) => {
+        const numeroSpan = resposta.querySelector('span');
+        if (numeroSpan) {
+            numeroSpan.textContent = `${index + 1}.`;
+        }
+    });
 }
 
 // Function to load response links from localStorage
@@ -346,6 +346,33 @@ function initConfigurarPage() {
         }
     });
 }
+
+// Função para imprimir
+function imprimirPDF() {
+    // Oculta o botão antes de imprimir
+    const botaoImprimir = document.querySelector('.botao-imprimir');
+    if (botaoImprimir) {
+        botaoImprimir.style.display = 'none';
+    }
+
+    // Chama a função de impressão
+    window.print();
+
+    // Restaura o botão depois de imprimir
+    setTimeout(() => {
+        if (botaoImprimir) {
+            botaoImprimir.style.display = 'block';
+        }
+    }, 1000);
+}
+
+// Adicione um evento de clique ao botão (método alternativo)
+document.addEventListener('DOMContentLoaded', function() {
+    const botaoImprimir = document.querySelector('.botao-imprimir');
+    if (botaoImprimir) {
+        botaoImprimir.addEventListener('click', imprimirPDF);
+    }
+});
 
 // Initialize the appropriate page
 document.addEventListener('DOMContentLoaded', function() {

@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documento Tamanho A4</title>
+    <title>CADERNO DE RESPOSTAS</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 <body>
     <div class="page page-first">
         <div class="titulo-teste">
-            <div class="titulo-texto">TESTE DE PERFORMANCE <span id="numeroTeste1">1</span></div>
+            <div class="titulo-texto">Teste de Performance <span id="numeroTeste1">1</span></div>
         </div>
 
         <div class="logo-container">
@@ -22,7 +21,7 @@
             <div id="nomeCurso">{Nome do Curso}</div>
             <div id="nomeMateria">{Nome da Materia}</div>
             <div id="nomeAluno">{Seu Nome}</div>
-            <div class="professor-info">Prof.: <span id="nomeProfessor">{Nome do Professor}</span></div>
+            <div class="professor-info">Prof(a) <span id="nomeProfessor">{Nome do Professor}</span></div>
         </div>
 
         <div class="data-documento">
@@ -36,7 +35,7 @@
 
     <div class="page">
         <div class="titulo-teste">
-            <div class="titulo-texto">TESTE DE PERFORMANCE <span id="numeroTeste2">1</span></div>
+            <div class="titulo-texto">Teste de Performance <span id="numeroTeste2">1</span></div>
             <br>
             <br>
             <h2>Respostas:</h2>
@@ -48,8 +47,8 @@
             2
         </div>
     </div>
-    <!-- Botão para baixar o PDF -->
-    <button id="download-pdf" onclick="downloadPDF()">Baixar PDF</button>
+
+<button onclick="imprimirPDF()" class="botao-imprimir">Imprimir PDF</button>
     <script src="script.js"></script>
 </body>
 </html>

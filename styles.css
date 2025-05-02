@@ -377,7 +377,7 @@ button:hover {
     right: 2cm;
     top: calc(3cm + 500px + 6cm);
     font-family: Arial, sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weight: bold;
     text-align: right;
 }
@@ -477,4 +477,128 @@ h1.document-link {
     font-size: 12px;
     color: #666;
     border-top: 1px solid #eee;
+}
+
+/* Estilos para o PDF */
+@media print {
+    /* Força quebra de página */
+    .page-break {
+        page-break-before: always;
+    }
+
+    /* Evita quebra dentro de elementos */
+    .no-break {
+        page-break-inside: avoid;
+    }
+
+    /* Ajustes para links */
+    a {
+        word-wrap: break-word;
+    }
+
+    /* Ajustes para imagens */
+    img {
+        max-width: 100% !important;
+    }
+
+    /* Ajustes para tabelas */
+    table {
+        width: 100% !important;
+        page-break-inside: avoid;
+    }
+}
+/* Estilos para impressão */
+@media print {
+    /* Esconde elementos que não devem aparecer no PDF */
+    .botao-imprimir,
+    .footer-credit {
+        display: none !important;
+    }
+
+    /* Ajustes gerais para impressão */
+    body {
+        margin: 0;
+        padding: 15mm;
+    }
+    
+    /* Garantir que as imagens não ultrapassem a largura da página */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* Estilo do botão */
+.botao-imprimir {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.botao-imprimir:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para impressão */
+@media print {
+    .botao-imprimir {
+        display: none !important;
+    }
+    
+    /* Ajustes gerais para impressão */
+    body {
+        margin: 0;
+        padding: 15mm;
+    }
+    
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+.curso-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.curso-select:hover {
+    border-color: #007bff;
+}
+
+.curso-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* Estilo para o botão de impressão */
+.botao-imprimir {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.botao-imprimir:hover {
+    background-color: #0056b3;
+}
+
+@media print {
+    .botao-imprimir {
+        display: none !important;
+    }
 }

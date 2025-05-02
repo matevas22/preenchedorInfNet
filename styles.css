@@ -1,0 +1,480 @@
+/* styles.css - Stylesheet for the InfNet document generator
+ * Developed by Luis Castelo Cidrao Neto
+ */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Common styles for all pages */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+/* General heading styles */
+h1, h2 {
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header styles */
+header {
+    background-color: #4a6fa5;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+section h2 {
+    margin-bottom: 15px;
+    color: #4a6fa5;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #4a6fa5;
+    box-shadow: 0 0 5px rgba(74, 111, 165, 0.3);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3a5a8a;
+}
+
+#add-field-btn {
+    background-color: #6c757d;
+}
+
+#add-field-btn:hover {
+    background-color: #5a6268;
+}
+
+/* File upload styles */
+.file-upload {
+    margin-top: 10px;
+}
+
+input[type="file"] {
+    padding: 8px;
+    background-color: #f0f0f0;
+}
+
+/* Preview section styles */
+.preview-section {
+    background-color: #fff;
+}
+
+#document-preview {
+    min-height: 200px;
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #f0f0f0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+/* Dynamic field styles */
+.dynamic-field {
+    background-color: #f0f7ff;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.remove-field {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+}
+
+.remove-field:hover {
+    background-color: #c82333;
+}
+
+/* Styles for configurar-numero.html */
+.form-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="number"],
+input[type="date"],
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #3a5a8a;
+}
+
+.status {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+}
+
+.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}
+
+.resposta-item {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.resposta-link {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.remover-resposta {
+    background-color: #f44336;
+    width: auto;
+    padding: 10px;
+}
+
+#adicionar-resposta {
+    background-color: #2196F3;
+    margin-top: 10px;
+}
+
+#adicionar-resposta:hover {
+    background-color: #0b7dda;
+}
+
+/* Styles for modelo.html */
+/* A4 page configuration */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+.page {
+    width: 21cm;
+    height: 29.7cm;
+    margin: 1cm auto;
+    background: white;
+    padding: 2cm;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: visible;
+    page-break-after: always;
+}
+
+.page-first .curso-info {
+    top: 13cm;
+}
+
+.page:last-child {
+    page-break-after: auto;
+}
+
+.titulo-teste {
+    display: block;
+    top: 2cm;
+    width: 100%;
+    text-align: center;
+}
+
+.titulo-texto {
+    width: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.professor-info {
+    margin-top: 5px;
+}
+
+.respostas-container {
+    margin-top: 2cm;
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+    text-align: left;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+    margin-top: 3.5cm;
+    overflow: visible;
+}
+
+.page-first .logo-container {
+    margin-top: 3cm;
+}
+
+.logo {
+    width: 400px;
+    height: auto;
+    display: block;
+    transform: scale(1.0);
+    transform-origin: center;
+    margin-top: -1cm;
+}
+
+.data-documento {
+    position: absolute;
+    bottom: 2.5cm;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14pt;
+    color: #000;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 1cm;
+    left: 2cm;
+    font-size: 10pt;
+    color: #666;
+}
+
+.folha-info {
+    position: absolute;
+    right: 2cm;
+    top: calc(3cm + 500px + 6cm);
+    font-family: Arial, sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Print styles for modelo.html */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif !important;
+        font-size: 14pt !important;
+        font-weight: bold !important;
+    }
+
+    .page {
+        width: 21cm;
+        height: 29.7cm;
+        margin: 0 auto;
+        padding: 2cm;
+        box-shadow: none;
+        page-break-after: always;
+        position: relative;
+    }
+
+    .page:last-child {
+        page-break-after: auto;
+    }
+
+    .titulo-teste {
+        display: block !important;
+        position: static;
+        top: 2cm;
+    }
+}
+
+/* Document link styles */
+.document-link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.document-link a {
+    color: #4a6fa5;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: 1px solid #4a6fa5;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.document-link a:hover {
+    background-color: #4a6fa5;
+    color: white;
+}
+
+h1.document-link {
+    margin-top: 0;
+    text-align: center;
+}
+/* PDF Download Button */
+.pdf-download-container {
+    text-align: center;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.download-pdf-btn {
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.download-pdf-btn:hover {
+    background-color: #3a5a8a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.download-pdf-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer with credit */
+.footer-credit {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 12px;
+    color: #666;
+    border-top: 1px solid #eee;
+}

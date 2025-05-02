@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Tamanho A4</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+    <div class="page page-first">
+        <div class="titulo-teste">
+            <div class="titulo-texto">TESTE DE PERFORMANCE <span id="numeroTeste1">1</span></div>
+        </div>
+
+        <div class="logo-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPXaAjZVhjBUsSlKFLvYODUlSyVDUItTwRJA&s" alt="Logo" class="logo">
+        </div>
+
+        <div class="folha-info">
+            <div id="nomeCurso">{Nome do Curso}</div>
+            <div id="nomeMateria">{Nome da Materia}</div>
+            <div id="nomeAluno">{Seu Nome}</div>
+            <div class="professor-info">Prof.: <span id="nomeProfessor">{Nome do Professor}</span></div>
+        </div>
+
+        <div class="data-documento">
+            <span id="dataDocumento">00/00/0000</span>
+        </div>
+
+        <div class="page-number">
+            1
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="titulo-teste">
+            <div class="titulo-texto">TESTE DE PERFORMANCE <span id="numeroTeste2">1</span></div>
+            <br>
+            <br>
+            <h2>Respostas:</h2>
+        </div>
+        <div id="respostas-links-container" class="respostas-container">
+        </div>
+
+        <div class="page-number">
+            2
+        </div>
+    </div>
+    <!-- Botão para baixar o PDF -->
+    <button id="download-pdf" onclick="downloadPDF()">Baixar PDF</button>
+    <script src="script.js"></script>
+</body>
+</html>

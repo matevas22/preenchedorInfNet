@@ -570,3 +570,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const logo = document.querySelector('.logo');
+    let isSpinning = false;
+
+    function toggleSpin() {
+        if (!isSpinning) {
+            logo.classList.add('spinning');
+            isSpinning = true;
+            
+            // Para a rotação após 5 segundos
+            setTimeout(() => {
+                logo.classList.remove('spinning');
+                logo.classList.add('stopping');
+                isSpinning = false;
+                
+                // Remove a classe 'stopping' após a transição
+                setTimeout(() => {
+                    logo.classList.remove('stopping');
+                }, 1000);
+            }, 5000);
+        }
+    }
+
+    // Inicia o ciclo de rotação a cada 10 segundos (5 segundos girando + 5 segundos parado)
+    setInterval(toggleSpin, 10000);
+    
+    // Inicia a primeira rotação
+    toggleSpin();
+});

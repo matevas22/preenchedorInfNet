@@ -7,72 +7,72 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-<div class="logo-container" style="height: auto; margin: 20px auto;">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPXaAjZVhjBUsSlKFLvYODUlSyVDUItTwRJA&s" alt="Logo" class="logo rotating-logo" style="width: 200px; margin-top: 0;">
-</div>
-
-    <h1>Preenchedor Infnet</h1>
-
-    <div class="form-container">
-        <div class="form-group">
-            <label for="numeroTeste">Número do Teste de Performance:</label>
-            <input type="number" id="numeroTeste" min="1" value="1">
+    <div class="container">
+        <div class="logo-container" style="height: auto; margin: 20px auto;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPXaAjZVhjBUsSlKFLvYODUlSyVDUItTwRJA&s" alt="Logo" class="logo" style="width: 200px; margin-top: 0;">
         </div>
 
-        <div class="form-group">
-            <label for="dataDocumento">Data do Preenchimento:</label>
-            <input type="date" id="dataDocumento">
-        </div>
+        <h1>Preenchedor Infnet</h1>
 
-        <div class="form-group">
-            <label for="nomeCurso">Nome do Curso:</label>
-            <select id="nomeCurso" class="curso-select">
-                <option value="">Selecione um curso</option>
-                <option value="Engenharia de Software">Engenharia de Software</option>
-                <option value="Engenharia da Computação">Engenharia da Computação</option>
-                <option value="Engenharia de Dados e IA">Engenharia de Dados e IA</option>
-                <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="nomeMateria">Nome da Matéria:</label>
-            <input type="text" id="nomeMateria" placeholder="Nome da Matéria">
-        </div>
-
-        <div class="form-group">
-            <label for="nomeAluno">Nome do Aluno:</label>
-            <input type="text" id="nomeAluno" placeholder="Seu Nome">
-        </div>
-
-        <div class="form-group">
-            <label for="nomeProfessor">Nome do Professor(a):</label>
-            <input type="text" id="nomeProfessor" placeholder="Nome do Professor">
-        </div>
-
-        <div class="form-group">
-            <label>Links de Respostas:</label>
-            <div id="respostas-container">
-                <!-- Response items will be added here by JavaScript -->
+        <div class="form-container">
+            <div class="form-group">
+                <label for="numeroTeste">Número do Teste de Performance:</label>
+                <input type="number" id="numeroTeste" min="1" value="1">
             </div>
-            <button type="button" id="adicionar-resposta">Adicionar Resposta</button>
+
+            <div class="form-group">
+                <label for="dataDocumento">Data do Preenchimento:</label>
+                <input type="date" id="dataDocumento">
+            </div>
+
+            <div class="form-group">
+                <label for="nomeCurso">Nome do Curso:</label>
+                <select id="nomeCurso" class="curso-select">
+                    <option value="">Selecione um curso</option>
+                    <option value="Engenharia de Software">Engenharia de Software</option>
+                    <option value="Engenharia da Computação">Engenharia da Computação</option>
+                    <option value="Engenharia de Dados e IA">Engenharia de Dados e IA</option>
+                    <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nomeMateria">Nome da Matéria:</label>
+                <input type="text" id="nomeMateria" placeholder="Nome da Matéria">
+            </div>
+
+            <div class="form-group">
+                <label for="nomeAluno">Nome do Aluno:</label>
+                <input type="text" id="nomeAluno" placeholder="Seu Nome">
+            </div>
+
+            <div class="form-group">
+                <label for="nomeProfessor">Nome do Professor(a):</label>
+                <input type="text" id="nomeProfessor" placeholder="Nome do Professor">
+            </div>
+
+            <div class="form-group">
+                <label>Links de Respostas:</label>
+                <div id="respostas-container">
+                    <!-- Response items will be added here by JavaScript -->
+                </div>
+                <button type="button" id="adicionar-resposta">Adicionar Resposta</button>
+            </div>
+
+            <button id="salvarNumero">Salvar Alterações</button>
+
+            <div id="status" class="status"></div>
         </div>
 
-        <button id="salvarNumero">Salvar Alterações</button>
+        <div class="document-link">
+            <a href="modelo.html" target="_blank" id="abrirDocumento">Abrir Arquivo</a>
+        </div>
 
-        <div id="status" class="status"></div>
+        <div class="footer-credit">
+            Desenvolvido por Luis Castelo Cidrao Neto
+        </div>
     </div>
 
-    <div class="document-link">
-        <a href="modelo.html" target="_blank" id="abrirDocumento">Abrir Arquivo</a>
-    </div>
-
-    <div class="footer-credit">
-        Desenvolvido por Luis Castelo Cidrao Neto
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

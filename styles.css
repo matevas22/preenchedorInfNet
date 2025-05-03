@@ -625,3 +625,24 @@ h1.document-link {
         display: none !important;
     }
 }
+@keyframes rotateLogo {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.logo {
+    transition: all 2s ease-out;
+}
+
+.logo.spinning {
+    animation: rotateLogo 2s linear infinite;
+}
+
+.logo.stopping {
+    animation: none;
+    transition: transform 1s ease-out;
+}

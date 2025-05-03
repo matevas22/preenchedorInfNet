@@ -638,11 +638,11 @@ h1.document-link {
     transition: all 2s ease-out;
 }
 
-.logo.spinning {
+.rotating-logo.spinning {
     animation: rotateLogo 2s linear infinite;
 }
 
-.logo.stopping {
+.rotating-logo.stopping {
     animation: none;
     transition: transform 1s ease-out;
 }

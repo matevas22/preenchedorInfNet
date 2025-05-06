@@ -24,7 +24,7 @@ h1, h2 {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 2000px;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 8px;
@@ -198,7 +198,7 @@ footer {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -298,6 +298,31 @@ button:hover {
 
 #adicionar-resposta:hover {
     background-color: #218838;
+}
+
+/* Styles for text editor */
+#editor-texto-livre {
+    width: 100%;
+    min-height: 200px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+#editor-texto-livre:focus {
+    outline: none;
+    border-color: #4a6fa5;
+    box-shadow: 0 0 5px rgba(74, 111, 165, 0.3);
+}
+
+.texto-livre-container {
+    margin-top: 2cm;
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+    text-align: left;
 }
 
 /* Styles for modelo.html */

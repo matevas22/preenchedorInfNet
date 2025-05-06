@@ -91,6 +91,27 @@ function atualizarLinksRespostas() {
     }
 }
 
+function atualizarTextoLivre() {
+    const container = document.getElementById('texto-livre-container');
+    if (!container) return;
+
+    // Clear the container
+    container.innerHTML = '';
+
+    // Get text from localStorage
+    const texto = localStorage.getItem('textoLivre');
+    if (texto && texto.trim() !== '') {
+        // Create a div to hold the text
+        const textoDiv = document.createElement('div');
+        textoDiv.style.padding = '0 2cm';
+        textoDiv.style.lineHeight = '1.5';
+        textoDiv.style.marginTop = '20px';
+        textoDiv.innerHTML = texto;
+
+        container.appendChild(textoDiv);
+    }
+}
+
 
 // Initialize modelo.html page
 function initModeloPage() {
@@ -101,6 +122,7 @@ function initModeloPage() {
             atualizarDataDocumento();
             atualizarInfoCurso();
             atualizarLinksRespostas();
+            atualizarTextoLivre();
         }
 
         // Execute when page loads
@@ -122,7 +144,8 @@ function initModeloPage() {
                 e.key === 'nomeMateria' ||
                 e.key === 'nomeAluno' ||
                 e.key === 'nomeProfessor' ||
-                e.key === 'respostasLinks') {
+                e.key === 'respostasLinks' ||
+                e.key === 'textoLivre') {
 
                 atualizarTodoConteudo();
             }
@@ -152,9 +175,9 @@ function adicionarCampoResposta() {
     const container = document.getElementById('respostas-container');
     const novaResposta = document.createElement('div');
     novaResposta.className = 'resposta-item';
-    
+
     const numeroResposta = container.children.length + 1;
-    
+
     novaResposta.innerHTML = `
         <div class="resposta-wrapper">
             <label for="resposta${numeroResposta}">${numeroResposta}:</label>
@@ -251,6 +274,29 @@ function initConfigurarPage() {
     // Load response links
     carregarLinksRespostas();
 
+    // Initialize TinyMCE
+    tinymce.init({
+        selector: '#editor-texto-livre',
+        height: 300,
+        menubar: false,
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic underline strikethrough | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+        content_style: 'body { font-family:Arial,sans-serif; font-size:14px }',
+        setup: function(editor) {
+            editor.on('init', function() {
+                // Load text editor content after TinyMCE is initialized
+                editor.setContent(localStorage.getItem('textoLivre') || '');
+            });
+        }
+    });
+
     // Set up event for adding new response
     const adicionarRespostaBtn = document.getElementById('adicionar-resposta');
     if (adicionarRespostaBtn) {
@@ -308,6 +354,12 @@ function initConfigurarPage() {
             // Save response links
             salvarLinksRespostas();
 
+            // Save text editor content
+            const editorTextoLivre = document.getElementById('editor-texto-livre');
+            if (editorTextoLivre) {
+                localStorage.setItem('textoLivre', editorTextoLivre.value);
+            }
+
             // Show success message
             const statusElement = document.getElementById('status');
             statusElement.textContent = 'Configurações atualizadas com sucesso!';
@@ -359,4 +411,37 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     initModeloPage();
     initConfigurarPage();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const logo = document.querySelector('.rotating-logo');
+    // Verifica se a logo com classe rotating-logo existe na página
+    if (logo) {
+        let isSpinning = false;
+
+        function toggleSpin() {
+            if (!isSpinning) {
+                logo.classList.add('spinning');
+                isSpinning = true;
+
+                // Para a rotação após 5 segundos
+                setTimeout(() => {
+                    logo.classList.remove('spinning');
+                    logo.classList.add('stopping');
+                    isSpinning = false;
+
+                    // Remove a classe 'stopping' após a transição
+                    setTimeout(() => {
+                        logo.classList.remove('stopping');
+                    }, 1000);
+                }, 5000);
+            }
+        }
+
+        // Inicia o ciclo de rotação a cada 10 segundos (5 segundos girando + 5 segundos parado)
+        setInterval(toggleSpin, 10000);
+
+        // Inicia a primeira rotação
+        toggleSpin();
+    }
 });

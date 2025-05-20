@@ -354,10 +354,10 @@ function initConfigurarPage() {
             // Save response links
             salvarLinksRespostas();
 
-            // Save text editor content
-            const editorTextoLivre = document.getElementById('editor-texto-livre');
-            if (editorTextoLivre) {
-                localStorage.setItem('textoLivre', editorTextoLivre.value);
+            // Save text editor content from TinyMCE
+            if (tinymce.get('editor-texto-livre')) {
+                const content = tinymce.get('editor-texto-livre').getContent();
+                localStorage.setItem('textoLivre', content);
             }
 
             // Show success message

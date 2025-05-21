@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preenchedor INFNET</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="node_modules/tinymce/tinymce.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -62,7 +61,37 @@
 
         <div class="form-group">
             <label>Texto Livre:</label>
-            <textarea id="editor-texto-livre" placeholder="Digite seu texto aqui..."></textarea>
+            <div class="custom-editor-container">
+                <div class="editor-toolbar">
+                    <div class="toolbar-group">
+                        <button type="button" data-command="bold" class="toolbar-btn" title="Negrito"><strong>B</strong></button>
+                        <button type="button" data-command="italic" class="toolbar-btn" title="Itálico"><em>I</em></button>
+                        <button type="button" data-command="underline" class="toolbar-btn" title="Sublinhado"><u>U</u></button>
+                        <button type="button" data-command="strikeThrough" class="toolbar-btn" title="Tachado"><s>S</s></button>
+                    </div>
+                    <span class="toolbar-separator"></span>
+                    <div class="toolbar-group">
+                        <button type="button" data-command="justifyLeft" class="toolbar-btn" title="Alinhar à esquerda">⇤</button>
+                        <button type="button" data-command="justifyCenter" class="toolbar-btn" title="Centralizar">⇔</button>
+                        <button type="button" data-command="justifyRight" class="toolbar-btn" title="Alinhar à direita">⇥</button>
+                    </div>
+                    <span class="toolbar-separator"></span>
+                    <div class="toolbar-group">
+                        <button type="button" data-command="insertUnorderedList" class="toolbar-btn" title="Lista com marcadores">• Lista</button>
+                        <button type="button" data-command="insertOrderedList" class="toolbar-btn" title="Lista numerada">1. Lista</button>
+                    </div>
+                    <span class="toolbar-separator"></span>
+                    <div class="toolbar-group">
+                        <select data-command="formatBlock" class="toolbar-select">
+                            <option value="p">Parágrafo</option>
+                            <option value="h1">Título 1</option>
+                            <option value="h2">Título 2</option>
+                            <option value="h3">Título 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="editor-texto-livre" class="editor-content" contenteditable="true" placeholder="Digite seu texto aqui..."></div>
+            </div>
         </div>
 
         <button id="salvarNumero">Salvar Alterações</button>

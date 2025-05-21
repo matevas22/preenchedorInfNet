@@ -300,22 +300,241 @@ button:hover {
     background-color: #218838;
 }
 
-/* Styles for text editor */
-#editor-texto-livre {
+/* Styles for custom text editor */
+.custom-editor-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.editor-toolbar {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.toolbar-btn {
+    background-color: #4a6fa5;
+    border: 1px solid #3a5a8a;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 36px;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    margin: 2px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.toolbar-btn:hover {
+    background-color: #3a5a8a;
+    border-color: #2a4a7a;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toolbar-btn.active {
+    background-color: #3a5a8a;
+    border-color: #2a4a7a;
+    color: white;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    font-weight: bold;
+}
+
+.toolbar-separator {
+    color: #ccc;
+    margin: 0 8px;
+    height: 20px;
+    width: 1px;
+    background-color: #ddd;
+    display: inline-block;
+}
+
+.toolbar-select {
+    padding: 8px;
+    border: 1px solid #3a5a8a;
+    border-radius: 4px;
+    background-color: #4a6fa5;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    height: 36px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.toolbar-select:hover {
+    background-color: #3a5a8a;
+    border-color: #2a4a7a;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Group related toolbar buttons */
+.editor-toolbar button[data-command="bold"],
+.editor-toolbar button[data-command="italic"],
+.editor-toolbar button[data-command="underline"],
+.editor-toolbar button[data-command="strikeThrough"] {
+    margin-right: 1px;
+    margin-left: 1px;
+    background-color: #4a6fa5;
+    color: white;
+}
+
+.editor-toolbar button[data-command="justifyLeft"],
+.editor-toolbar button[data-command="justifyCenter"],
+.editor-toolbar button[data-command="justifyRight"] {
+    margin-right: 1px;
+    margin-left: 1px;
+    background-color: #4a6fa5;
+    color: white;
+}
+
+.editor-toolbar button[data-command="insertUnorderedList"],
+.editor-toolbar button[data-command="insertOrderedList"] {
+    margin-right: 1px;
+    margin-left: 1px;
+    background-color: #4a6fa5;
+    color: white;
+}
+
+/* Add a subtle border to group buttons visually */
+.editor-toolbar {
+    position: relative;
+}
+
+.toolbar-group {
+    display: inline-flex;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0 4px;
+    border: 1px solid #3a5a8a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.toolbar-group .toolbar-btn {
+    border: none;
+    border-right: 1px solid #3a5a8a;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+.toolbar-group .toolbar-btn:last-child {
+    border-right: none;
+}
+
+.toolbar-group .toolbar-select {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.toolbar-group:hover {
+    border-color: #2a4a7a;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Responsive design for toolbar */
+@media (max-width: 768px) {
+    .editor-toolbar {
+        padding: 8px 6px;
+        gap: 4px;
+    }
+
+    .toolbar-btn {
+        padding: 6px 8px;
+        min-width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .toolbar-separator {
+        margin: 0 4px;
+        height: 16px;
+    }
+
+    .toolbar-select {
+        padding: 6px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .toolbar-group {
+        margin: 0 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .editor-toolbar {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .toolbar-group {
+        margin: 2px;
+    }
+
+    /* Stack the list buttons on very small screens */
+    .toolbar-group:nth-child(5) {
+        flex-direction: column;
+    }
+
+    .toolbar-group:nth-child(5) .toolbar-btn {
+        border-right: none;
+        border-bottom: 1px solid #3a5a8a;
+    }
+
+    .toolbar-group:nth-child(5) .toolbar-btn:last-child {
+        border-bottom: none;
+    }
+}
+
+.editor-content {
     width: 100%;
     min-height: 200px;
     padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
     font-size: 16px;
     line-height: 1.5;
-    resize: vertical;
+    background-color: #fff;
+    overflow-y: auto;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease;
 }
 
-#editor-texto-livre:focus {
+.editor-content:focus {
     outline: none;
     border-color: #4a6fa5;
     box-shadow: 0 0 5px rgba(74, 111, 165, 0.3);
+}
+
+.editor-content.focused {
+    border-color: #4a6fa5;
+    box-shadow: 0 0 5px rgba(74, 111, 165, 0.3);
+}
+
+.editor-content.empty[placeholder]:before {
+    content: attr(placeholder);
+    color: #aaa;
+    font-style: italic;
+    position: absolute;
+    pointer-events: none;
+    top: 12px;
+    left: 12px;
+}
+
+.custom-editor-container {
+    position: relative;
 }
 
 .texto-livre-container {

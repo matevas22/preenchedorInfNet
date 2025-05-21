@@ -274,28 +274,8 @@ function initConfigurarPage() {
     // Load response links
     carregarLinksRespostas();
 
-    // Initialize TinyMCE
-    tinymce.init({
-        selector: '#editor-texto-livre',
-        height: 300,
-        menubar: false,
-        plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'help', 'wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | ' +
-            'bold italic underline strikethrough | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-        content_style: 'body { font-family:Arial,sans-serif; font-size:14px }',
-        setup: function(editor) {
-            editor.on('init', function() {
-                // Load text editor content after TinyMCE is initialized
-                editor.setContent(localStorage.getItem('textoLivre') || '');
-            });
-        }
-    });
+    // Initialize custom text editor
+    initCustomEditor();
 
     // Set up event for adding new response
     const adicionarRespostaBtn = document.getElementById('adicionar-resposta');
@@ -354,10 +334,10 @@ function initConfigurarPage() {
             // Save response links
             salvarLinksRespostas();
 
-            // Save text editor content from TinyMCE
-            if (tinymce.get('editor-texto-livre')) {
-                const content = tinymce.get('editor-texto-livre').getContent();
-                localStorage.setItem('textoLivre', content);
+            // Save text editor content from custom editor
+            const editorContent = document.getElementById('editor-texto-livre');
+            if (editorContent) {
+                localStorage.setItem('textoLivre', editorContent.innerHTML);
             }
 
             // Show success message
@@ -445,3 +425,136 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleSpin();
     }
 });
+
+// Function to initialize the custom text editor
+function initCustomEditor() {
+    const editor = document.getElementById('editor-texto-livre');
+    if (!editor) return;
+
+    // Load content from localStorage
+    const savedContent = localStorage.getItem('textoLivre');
+    if (savedContent && savedContent.trim() !== '') {
+        editor.innerHTML = savedContent;
+    } else {
+        editor.innerHTML = '';
+    }
+
+    // Function to update button states based on current selection
+    function updateButtonStates() {
+        const buttons = document.querySelectorAll('.toolbar-btn');
+        buttons.forEach(button => {
+            const command = button.dataset.command;
+            if (['bold', 'italic', 'underline', 'strikeThrough'].includes(command)) {
+                if (document.queryCommandState(command)) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+        });
+
+        // Update format selector
+        const formatSelector = document.querySelector('.toolbar-select');
+        if (formatSelector) {
+            const currentFormat = document.queryCommandValue('formatBlock').replace(/[<>]/g, '');
+            if (currentFormat && Array.from(formatSelector.options).some(option => option.value === currentFormat)) {
+                formatSelector.value = currentFormat;
+            } else {
+                formatSelector.value = 'p'; // Default to paragraph
+            }
+        }
+    }
+
+    // Add event listeners to toolbar buttons
+    const buttons = document.querySelectorAll('.toolbar-btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const command = this.dataset.command;
+
+            if (command === 'bold' || command === 'italic' || command === 'underline' || 
+                command === 'strikeThrough' || command === 'justifyLeft' || 
+                command === 'justifyCenter' || command === 'justifyRight' || 
+                command === 'insertUnorderedList' || command === 'insertOrderedList') {
+                document.execCommand(command, false, null);
+                updateButtonStates();
+            }
+
+            // Focus back on the editor
+            editor.focus();
+        });
+    });
+
+    // Add event listener to format selector
+    const formatSelector = document.querySelector('.toolbar-select');
+    if (formatSelector) {
+        formatSelector.addEventListener('change', function() {
+            const command = this.dataset.command;
+            const value = this.value;
+
+            if (command === 'formatBlock') {
+                // Format block needs to be wrapped in < >
+                document.execCommand(command, false, '<' + value + '>');
+            }
+
+            // Focus back on the editor
+            editor.focus();
+        });
+    }
+
+    // Make sure the editor is focused when clicked
+    editor.addEventListener('click', function() {
+        this.focus();
+        updateButtonStates();
+    });
+
+    // Update button states when selection changes
+    editor.addEventListener('keyup', updateButtonStates);
+    editor.addEventListener('mouseup', updateButtonStates);
+
+    // Use document for selectionchange for better browser compatibility
+    document.addEventListener('selectionchange', function() {
+        // Only update if the editor is focused
+        if (document.activeElement === editor) {
+            updateButtonStates();
+        }
+    });
+
+    // Function to check if editor is empty
+    function isEditorEmpty() {
+        const content = editor.innerHTML.trim();
+        return content === '' || content === '<br>' || content === '<div><br></div>';
+    }
+
+    // Function to handle placeholder visibility
+    function updatePlaceholder() {
+        if (isEditorEmpty()) {
+            editor.classList.add('empty');
+        } else {
+            editor.classList.remove('empty');
+        }
+    }
+
+    // Handle placeholder text
+    editor.addEventListener('focus', function() {
+        this.classList.add('focused');
+        updatePlaceholder();
+    });
+
+    editor.addEventListener('blur', function() {
+        this.classList.remove('focused');
+        if (isEditorEmpty()) {
+            this.innerHTML = '';
+        }
+        updatePlaceholder();
+    });
+
+    // Update placeholder on input
+    editor.addEventListener('input', updatePlaceholder);
+
+    // Initial update of button states and placeholder
+    setTimeout(function() {
+        updateButtonStates();
+        updatePlaceholder();
+    }, 100);
+}
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CADERNO DE RESPOSTAS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page page-first">
+      <div class="titulo-teste">
+        <div class="titulo-texto">
+          <span id="tipoTeste1">Teste de Performance</span> <span id="numeroTeste1">1</span>
+        </div>
+      </div>
+
+      <div class="logo-container">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPXaAjZVhjBUsSlKFLvYODUlSyVDUItTwRJA&s"
+          alt="Logo"
+          class="logo"
+        />
+      </div>
+
+      <div class="folha-info">
+        <div id="nomeCurso">{Nome do Curso}</div>
+        <div id="nomeMateria">{Nome da Materia}</div>
+        <div id="nomeAluno">{Seu Nome}</div>
+        <div class="professor-info">
+          Prof(a) <span id="nomeProfessor">{Nome do Professor}</span>
+        </div>
+      </div>
+
+      <div class="data-documento">
+        <span id="dataDocumento">00/00/0000</span>
+      </div>
+
+      <div class="page-number">1</div>
+    </div>
+
+    <div class="page">
+      <div class="titulo-teste">
+        <div class="titulo-texto">
+          <span id="tipoTeste2">Teste de Performance</span> <span id="numeroTeste2">1</span>
+        </div>
+        <br />
+        <br />
+        <h2>Respostas:</h2>
+      </div>
+      <div id="respostas-links-container" class="respostas-container"></div>
+
+      <div id="texto-livre-container" class="texto-livre-container"></div>
+
+      <div class="page-number">2</div>
+    </div>
+
+    <button
+      onclick="alert('ATENÇÃO!\nAo salvar o arquivo PDF, renomeie usando o padrão:\nnome_sobrenome_DR1_TP1.PDF'); window.print();"
+      class="botao-imprimir"
+    >
+      Imprimir PDF
+    </button>
+    
+    <script src="../script.js"></script>
+  </body>
+</html>

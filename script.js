@@ -13,7 +13,13 @@ function atualizarTipoTeste() {
 }
 
 function atualizarNumeroTeste() {
-  const numeroTeste = localStorage.getItem("numeroTeste") || "1";
+  const tipoTeste = localStorage.getItem("tipoTeste") || "Teste de Performance";
+  let numeroTeste = localStorage.getItem("numeroTeste") || "";
+
+  // Se não for Assessment e não houver número, usar "1" como padrão
+  if (tipoTeste !== "Assessment" && !numeroTeste) {
+    numeroTeste = "1";
+  }
 
   const elemento1 = document.getElementById("numeroTeste1");
   const elemento2 = document.getElementById("numeroTeste2");
@@ -237,7 +243,36 @@ function initConfigurarPage() {
   document.getElementById("tipoTeste").value = tipoSalvo;
 
   const numeroSalvo = localStorage.getItem("numeroTeste") || "1";
-  document.getElementById("numeroTeste").value = numeroSalvo;
+  const numeroTesteInput = document.getElementById("numeroTeste");
+
+  // Configurar campo número do teste baseado no tipo salvo
+  if (tipoSalvo === "Assessment") {
+    if (!numeroSalvo || numeroSalvo === "1") {
+      numeroTesteInput.value = "";
+    } else {
+      numeroTesteInput.value = numeroSalvo;
+    }
+    numeroTesteInput.placeholder = "Opcional para Assessment";
+  } else {
+    numeroTesteInput.value = numeroSalvo;
+    numeroTesteInput.placeholder = "";
+  }
+
+  // Adicionar event listener para mudança no tipo de teste
+  document.getElementById("tipoTeste").addEventListener("change", function () {
+    const numeroTesteInput = document.getElementById("numeroTeste");
+    if (this.value === "Assessment") {
+      // Limpar o campo quando selecionar Assessment
+      numeroTesteInput.value = "";
+      numeroTesteInput.placeholder = "Opcional para Assessment";
+    } else {
+      // Restaurar valor padrão para outros tipos
+      if (!numeroTesteInput.value) {
+        numeroTesteInput.value = "1";
+      }
+      numeroTesteInput.placeholder = "";
+    }
+  });
 
   const hoje = new Date();
   const dataFormatada = hoje.toISOString().split("T")[0]; // Format YYYY-MM-DD for input type="date"
@@ -282,7 +317,11 @@ function initConfigurarPage() {
       validado = false;
     }
 
-    if (!numeroTeste || parseInt(numeroTeste) <= 0) {
+    // Validar número do teste apenas se não for Assessment
+    if (
+      tipoTeste !== "Assessment" &&
+      (!numeroTeste || parseInt(numeroTeste) <= 0)
+    ) {
       alert("Por favor, insira um número válido maior que zero.");
       validado = false;
     }
@@ -294,7 +333,10 @@ function initConfigurarPage() {
 
     if (validado) {
       localStorage.setItem("tipoTeste", tipoTeste);
-      localStorage.setItem("numeroTeste", numeroTeste);
+      // Para Assessment, permitir salvar string vazia; para outros, garantir que tenha um valor
+      const numeroParaSalvar =
+        tipoTeste === "Assessment" ? numeroTeste || "" : numeroTeste || "1";
+      localStorage.setItem("numeroTeste", numeroParaSalvar);
 
       localStorage.setItem("dataDocumentoInput", dataDocumento);
 

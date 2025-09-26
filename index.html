@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    
     <div class="container">
-            <div class="ui-switch" style="margin-top: 15px; margin-left: 9px; z-index: 1000;">
-        <input type="checkbox" id="toggle-dark-mode">
+      <div
+        class="ui-switch"
+        style="margin-top: 15px; margin-left: 9px; z-index: 1000"
+      >
+        <input type="checkbox" id="toggle-dark-mode" />
         <label for="toggle-dark-mode" class="slider">
           <span class="circle"></span>
         </label>
@@ -20,16 +22,17 @@
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPXaAjZVhjBUsSlKFLvYODUlSyVDUItTwRJA&s"
           alt="Logo"
           class="logo rotating-logo"
-          style="width: 200px; margin-top: 0; border-radius: 50%;"
+          style="width: 200px; margin-top: 0; border-radius: 50%"
         />
       </div>
-    
+
       <div class="form-container">
         <div class="form-group">
           <label for="tipoTeste">Tipo de Teste:</label>
           <select id="tipoTeste" class="curso-select">
             <option value="Teste de Performance">Teste de Performance</option>
             <option value="Live Coding">Live Coding</option>
+            <option value="Assessment">Assessment</option>
           </select>
         </div>
 
@@ -217,11 +220,7 @@
       </div>
 
       <div class="document-link">
-        <button
-          type="button"
-          id="abrirDocumento"
-          class="modern-button"
-        >
+        <button type="button" id="abrirDocumento" class="modern-button">
           <span class="button-text">Abrir Arquivo</span>
           <div class="button-loading">
             <div class="loading-spinner"></div>
@@ -262,30 +261,31 @@
           localStorage.setItem("darkMode", "0");
         }
       }
-      
+
       document
         .getElementById("toggle-dark-mode")
         .addEventListener("change", function () {
           setDarkMode(this.checked);
         });
-        
+
       // Carregar preferência
       if (localStorage.getItem("darkMode") === "1") {
         setDarkMode(true);
       }
-      
+
       // Botão Abrir Arquivo
-      document.getElementById("abrirDocumento").addEventListener("click", function() {
-        // Simular loading por 2 segundos
-        this.classList.add("loading");
-        
-        setTimeout(() => {
-          // Abrir o arquivo
-          window.open("respostas/modelo.html", "_blank");
-          this.classList.remove("loading");
-        }, 2000);
-      });
-      
+      document
+        .getElementById("abrirDocumento")
+        .addEventListener("click", function () {
+          // Simular loading por 2 segundos
+          this.classList.add("loading");
+
+          setTimeout(() => {
+            // Abrir o arquivo
+            window.open("respostas/modelo.html", "_blank");
+            this.classList.remove("loading");
+          }, 2000);
+        });
     </script>
   </body>
 </html>

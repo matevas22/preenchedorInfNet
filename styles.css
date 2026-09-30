@@ -210,7 +210,7 @@ textarea:focus {
   gap: 6px;
 }
 
-.chip-item {
+. {
   display: inline-flex;
   align-items: center;
   background: var(--primary-light);
@@ -965,12 +965,9 @@ body.dark-mode .btn-qtd-rapida.active {
 }
 
 body.dark-mode .chip-item {
-  background: #1e3a8a;
-  color: #ffffff;
-}
-
-body.dark-mode .chip-item:hover {
-  background: #1d4ed8;
+  background: #11192f;
+  color: #93c5fd;
+  border-color: #11192f;
 }
 
 body.dark-mode .btn-chip-remover {

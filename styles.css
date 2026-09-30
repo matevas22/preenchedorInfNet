@@ -966,8 +966,7 @@ body.dark-mode .btn-qtd-rapida.active {
 
 body.dark-mode .chip-item {
   background: #1e3a8a;
-  border-color: #2563eb;
-  color: #93c5fd;
+  color: #ffffff;
 }
 
 body.dark-mode .chip-item:hover {
